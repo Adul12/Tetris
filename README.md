@@ -1,4 +1,4 @@
-# tetris-ai
+# Tetris
 
 A bot that plays [tetris](https://en.wikipedia.org/wiki/Tetris) using deep reinforcement learning.
 
@@ -27,29 +27,6 @@ The neural network will be updated with the given data (considering a play with 
 if not terminal state (last round): *Q_state* = *reward* + *discount* × *Q_next_state*
 else: *Q_state* = *reward*
 
-
-#### Best Action
-
-Most of the deep Q Learning strategies used output a vector of values for a certain state. Each position of the vector maps to some action (ex: left, right, ...), and the position with the higher value is selected.
-
-However, the strategy implemented was slightly different. For some round of Tetris, the states for all the possible moves will be collected. Each state will be inserted in the neural network, to predict the score obtained. The action whose state outputs the biggest value will be played.
-
-
-#### Game State
-
-It was considered several attributes to train the network. Since there were many, after several tests, a conclusion was reached that only the first four present were necessary to train:
-
-- **Number of lines cleared**
-- **Number of holes**
-- **Bumpiness** (sum of the difference between heights of adjacent pairs of columns)
-- **Total Height**
-- Max height
-- Min height
-- Max bumpiness
-- Next piece
-- Current piece
-
-
 #### Game Score
 
 Each block placed yields 1 point. When clearing lines, the given score is *number_lines_cleared*^2 × *board_width*. Losing a game subtracts 1 point.
@@ -58,15 +35,6 @@ Each block placed yields 1 point. When clearing lines, the given score is *numbe
 ## Implementation
 
 All the code was implemented using `Python`. For the neural network, it was used the framework `Keras` with `Tensorflow` as backend.
-
-#### Internal Structure
-
-The agent is formed by a deep neural network, with variable number of layers, neurons per layer, activation functions, loss function, optimizer, etc. By default, it was chosen a neural network with 2 hidden layers (32 neurons each); the activations `ReLu` for the inner layers and the `Linear` for the last one; `Mean Squared Error` as the loss function; `Adam` as the optimizer; `Epsilon` (exploration) starting at 1 and ending at 0, when the number of episodes reaches 75%; `Discount` at 0.95 (significance given to the future rewards, instead of the immediate ones).
-
-#### Training
-
-For the training, the replay queue had size 20000, with a random sample of 512 selected for training each episode, using 1 epoch.
-
 
 #### Requirements
 
@@ -101,14 +69,3 @@ For 2000 episodes, with epsilon ending at 1500, the agent kept going for too lon
 ![results](./results.svg)
 
 Note: Decreasing the `epsilon_end_episode` could make the agent achieve better results in a smaller number of episodes.
-
-
-## Useful Links
-
-#### Deep Q Learning
-- PythonProgramming - https://pythonprogramming.net/q-learning-reinforcement-learning-python-tutorial/
-- Keon - https://keon.io/deep-q-learning/
-- Towards Data Science - https://towardsdatascience.com/self-learning-ai-agents-part-ii-deep-q-learning-b5ac60c3f47
-
-#### Tetris
-- Code My Road - https://codemyroad.wordpress.com/2013/04/14/tetris-ai-the-near-perfect-player/ (uses evolutionary strategies)

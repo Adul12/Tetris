@@ -65,7 +65,4 @@ tensorboard --logdir ./logs
 ## Results
 
 For 2000 episodes, with epsilon ending at 1500, the agent kept going for too long around episode 1460, so it had to be terminated. Here is a chart with the maximum score every 50 episodes, until episode 1450:
-
-![results](./results.svg)
-
 Note: Decreasing the `epsilon_end_episode` could make the agent achieve better results in a smaller number of episodes.
